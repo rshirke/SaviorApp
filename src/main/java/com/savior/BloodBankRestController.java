@@ -13,7 +13,7 @@ public class BloodBankRestController {
 
 	@Autowired BloodBankRepository bbRepo;
 	
-	@RequestMapping("")
+	@RequestMapping("/getallbb")
 	public List<BloodBank> listBloodBanks() {
 		
 		return bbRepo.findAll();

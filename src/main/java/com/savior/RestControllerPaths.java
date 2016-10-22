@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping()
+@RequestMapping
 public class RestControllerPaths {
 	
 	@Autowired
@@ -15,8 +15,8 @@ public class RestControllerPaths {
 	@RequestMapping("/helloinsert")
 	public String hello()
 	{
-		repo.save(new UserFB("sia", "sia@sia.com", "1234"));	
-		return "Spring rocks!!";
+		//repo.save(new UserFB("sia", "sia@sia.com", "1234"));	
+		return "/static/test.html";
 	}
 	
 }

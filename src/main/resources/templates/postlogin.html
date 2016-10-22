@@ -1,15 +1,28 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="myApp">
 <head>
-<script type="text/javascript" th:src="@{/app.js}" />
+<meta charset="utf-8">
+<title>Savior Application</title>
+<script type="text/javascript" src="/static/bower_components/angular/angular.js" th:src="@{/bower_components/angular/angular.js}"></script>
+<script type="text/javascript" src="/static/app/js/app.js" th:src="@{/app/js/app.js}"></script>
+<script type="text/javascript" src="/static/app/js/app.controller.js" th:src="@{/app/js/app.controller.js}"></script>
 </head>
 <body>
 <h2>
 The Login is successful. 
+Welcome to Savior.
 </h2>
-<h3>Welcome, <span th:text="${facebookProfile.name}">Some User</span>!</h3>
-
+<!--<h3>Welcome, <span th:text="${Profile.name}">Some User</span>!</h3>   -->
+<div>
+ <ul class="bblist">
+        <li ng-repeat="bb in $ctrl.bblist">
+          <span>{{bb.name}}</span>
+          <p>{{bb.location}}</p>
+        </li>
+      </ul>
+</div>
 <form action="/logout" method="DELETE">
-<p><button type="submit">Logout to Facebook</button></p>
+<p><button type="submit">Logout </button></p>
 </form>
-</body>
+</body>	
 </html>

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/loginfb")
 public class HelloController {
 
 	private static Facebook facebook;
@@ -29,6 +29,8 @@ public class HelloController {
 		this.connectionRepository = connectionRepository;
 	}
 
+	
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String helloFacebook(Model model) {
 
@@ -59,16 +61,11 @@ public class HelloController {
 			System.out.println("User already exits");
 			
 		}
-		
-		
-		
-		model.addAttribute("facebookProfile", facebook.userOperations().getUserProfile());		
+	
+		model.addAttribute("Profile", facebook.userOperations().getUserProfile());		
 		PagedList<Post> feed = facebook.feedOperations().getFeed();
 		model.addAttribute("feed", feed);
 			
-		
-		
 		return "postlogin";
 	}
-
 }
