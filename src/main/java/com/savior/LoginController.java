@@ -20,6 +20,8 @@ public class LoginController {
         credentials.put("hellosso", "hellosso");
     }
 
+    
+    
     @RequestMapping("/login")
     public String login(){
         return "login";
@@ -30,7 +32,7 @@ public class LoginController {
         if (username == null || !credentials.containsKey(username) || !credentials.get(username).equals(password)){
             model.addAttribute("error", "Invalid username or password!");
             System.out.println("Invalid User!");
-            return "login";
+            return "index1";
         }
 
         String token = JwtUtil.generateToken(signingKey, username);
@@ -58,6 +60,6 @@ public class LoginController {
     	//pass token as well.
     	
     	System.out.println("PostLogin Get Request was called !!");
-        return "postlogin";
+        return "mainpage";
     }
 }

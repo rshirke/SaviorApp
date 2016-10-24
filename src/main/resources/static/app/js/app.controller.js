@@ -1,8 +1,7 @@
 angular.
   module('myApp').
   component('bloodbanklist', {
-    template:
-    	
+    template:   	
         '<ul>' +
           '<li ng-repeat="bb in $ctrl.bblist">' +
             '<span>{{bb.name}}</span>' +

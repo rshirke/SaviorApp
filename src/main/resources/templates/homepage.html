@@ -1,0 +1,46 @@
+<html>
+<title>FACEBOOK
+</title>
+<head>
+<link type="text/css" rel="stylesheet" href="/static/app/css/home.css" th:href="@{/app/css/home.css}" />
+
+</head>
+<body style="height:815px">
+
+<div class="headerx">
+
+<div id="img1" class="header"><a href="/"><img src="/static/app/images/logo.jpg" th:src="@{/app/images/logo.jpg}" id="img1" /></a></div>
+
+<form method="post" action="/postlogin">
+<div id="form1" class="header">Email or Username<br></br>
+<input placeholder="Email" type="mail" id="login" name="name" /><br></br>
+<input type="checkbox" id="login" />Keep me logged in</div>
+<div id="form2" class="header">Password<br></br>
+<input placeholder="Password" type="password" name="password"/><br></br>
+</div>
+<div id="submit1" class="header"><input type="submit" id="button1" value="login"/></div>
+</form>
+</div>
+<div class="bodyx">
+   <div id="intro1" class="bodyx">Savior helps you connect and share<br></br>with people in universities.</div>
+<div id="intro2" class="bodyx">Create an account</div>
+<div id="img2" class="bodyx"><img src="/static/app/images/homepagemain.png" th:src="@{/app/images/homepagemain.png}"/></div>
+<div id="intro3" class="bodyx">It's free and always will be.</div>
+<form method="post" action="/postlogin" >
+<div id="form3" class="bodyx"><input placeholder="Firstname" type="text" id="namebox" name="name1" /><input placeholder="Lastname" type="text" id="namebox"/><br></br>
+<input placeholder="Email" type="text" id="mailbox"/><br></br>
+<input placeholder="Re-enter email" type="text" id="mailbox"/><br></br>
+<input placeholder="Password" type="password" id="mailbox"/><br></br>
+<input type="date" id="namebox"/><br></br>
+<input type="radio" name="sex" value="male"/> Male  <input type="radio" name="sex" value="female"/> Female<br></br><br></br>
+By clicking Create an account, you agree to our Terms.<br></br>
+<input type="submit" id="button2" value="Signup"/>
+</div>
+</form>
+</div>
+
+
+<div class="body1">
+<div id="conclu1" class="body1">English UK....<br></br><hr></hr>Contacts......</div></div>
+</body>
+</html>
