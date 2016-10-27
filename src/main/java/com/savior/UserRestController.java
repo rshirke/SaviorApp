@@ -16,7 +16,7 @@ public class UserRestController {
 	
 	@RequestMapping("")
 	public List<UserFB> listUsers() {
-		
+		System.out.println("The Users get request was called..");
 		return repo.findAll();
 	}
 	
