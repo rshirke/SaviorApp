@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<html ng-app="plunker">
+<html>
 <head>
 <title>Savior Welcome Page</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -22,8 +22,6 @@
 	th:src="@{/app/js/main/skel.min.js}"></script>
 <script src="/static/app/js/main/getBloodBanks.js"
 	th:src="@{/app/js/main/getBloodBanks.js}"></script>
-<script src="/static/app/js/main/searchbanks.js"
-	th:src="@{/app/js/main/searchbanks.js}"></script>
 <script src="/static/app/js/main/skel-panels.min.js"
 	th:src="@{/app/js/main/skel-panels.min.js}"></script>
 <script src="/static/app/js/main/init.js"
@@ -115,11 +113,11 @@
 							<div>
 								<ui-view></ui-view>
 							</div>
-							<div id="getUsersData" ng-controller="MainCtrl">
+					 <!--		<div id="getUsersData" ng-controller="MainCtrl">
 								<button ng-click="getData()">Get Data</button>
 								<button ng-click="clearData()">Clear Data</button>
 								<pre>{{ data | json }}</pre>
-							</div>
+							</div> -->
 						</section>
 					</div>
 					<div class="3u">

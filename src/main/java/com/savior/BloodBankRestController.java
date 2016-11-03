@@ -14,8 +14,7 @@ public class BloodBankRestController {
 	@Autowired BloodBankRepository bbRepo;
 	
 	@RequestMapping("/getallbb")
-	public List<BloodBank> listBloodBanks() {
-		
+	public List<BloodBank> listBloodBanks() {	
 		return bbRepo.findAll();
 	}
 	
