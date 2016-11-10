@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class RestControllerPaths {
 	
-	@Autowired
-	UserRepository repo;
-	
+//	@Autowired
+//	UserRepository repo;
+//	
 	@RequestMapping("/helloinsert")
 	public String hello()
 	{

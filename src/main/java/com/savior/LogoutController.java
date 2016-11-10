@@ -16,8 +16,8 @@ public class LogoutController {
 
 	private static ConnectionRepository connectionRepository;
 
-	@Autowired
-	UserRepository repo;
+//	@Autowired
+//	UserRepository repo;
 
 	public LogoutController(ConnectionRepository connectionRepository) {
 		this.connectionRepository = connectionRepository;

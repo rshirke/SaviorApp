@@ -18,9 +18,9 @@ public class BloodBankRestController {
 		return bbRepo.findAll();
 	}
 	
-	@RequestMapping("/{id}")
-	public BloodBank getById(@PathVariable Long id) {		
-		return bbRepo.findOne(id);
-	}
+//	@RequestMapping("/{id}")
+//	public BloodBank getById(@PathVariable Long id) {		
+//		return bbRepo.findOne(id);
+//	}
 	
 }
