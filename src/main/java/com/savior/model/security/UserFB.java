@@ -1,4 +1,4 @@
-package com.savior;
+package com.savior.model.security;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

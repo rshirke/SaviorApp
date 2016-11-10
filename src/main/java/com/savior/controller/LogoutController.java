@@ -1,4 +1,4 @@
-package com.savior;
+package com.savior.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LogoutController {
 
 	private static ConnectionRepository connectionRepository;
-
+//
 //	@Autowired
 //	UserRepository repo;
 
