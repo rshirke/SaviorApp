@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserRestController {
 
-//	@Autowired UserRepository repo;
-//	
-//	
-//	@RequestMapping("")
-//	public List<UserFB> listUsers() {
-//		System.out.println("The Users get request was called..");
-//		return repo.findAll();
-//	}
-//	
-//	@RequestMapping("/{id}")
-//	public UserFB getById(@PathVariable Long id) {
-//		
-//		return repo.findOne(id);
-//	}
+	// @Autowired UserRepository repo;
+	//
+	//
+	// @RequestMapping("")
+	// public List<UserFB> listUsers() {
+	// System.out.println("The Users get request was called..");
+	// return repo.findAll();
+	// }
+	//
+	// @RequestMapping("/{id}")
+	// public UserFB getById(@PathVariable Long id) {
+	//
+	// return repo.findOne(id);
+	// }
 }

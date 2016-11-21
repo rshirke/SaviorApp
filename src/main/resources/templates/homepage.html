@@ -11,16 +11,17 @@
 
 <div id="img1" class="header"><a href="/"><img src="/static/app/images/logo.jpg" th:src="@{/app/images/logo.jpg}" id="img1" /></a></div>
 
-<form method="post" action="/postlogin">
+<form method="post" action="/auth">
 <div id="form1" class="header">Email or Username<br></br>
-<input placeholder="Email" type="mail" id="login" name="name" /><br></br>
-<input type="checkbox" id="login" />Keep me logged in</div>
+<input placeholder="Email" type="mail" id="login" name="username" />
+</div>
 <div id="form2" class="header">Password<br></br>
 <input placeholder="Password" type="password" name="password"/><br></br>
 </div>
 <div id="submit1" class="header"><input type="submit" id="button1" value="login"/></div>
 </form>
 </div>
+
 <div class="bodyx">
    <div id="intro1" class="bodyx">Savior helps you connect and share<br></br>with people for noble cause.</div>
 <div id="intro2" class="bodyx">Create an account</div>

@@ -14,16 +14,17 @@ import com.savior.repository.BloodBankRepository;
 @RequestMapping("/bloodbanks")
 public class BloodBankRestController {
 
-	@Autowired BloodBankRepository bbRepo;
-	
+	@Autowired
+	BloodBankRepository bbRepo;
+
 	@RequestMapping("/getallbb")
-	public List<BloodBank> listBloodBanks() {	
+	public List<BloodBank> listBloodBanks() {
 		return bbRepo.findAll();
 	}
-	
-//	@RequestMapping("/{id}")
-//	public BloodBank getById(@PathVariable Long id) {		
-//		return bbRepo.findOne(id);
-//	}
-	
+
+	 @RequestMapping("/{id}")
+	 public BloodBank getById(@PathVariable Long id) {
+	 return bbRepo.findOne(id);
+	 }
+
 }
