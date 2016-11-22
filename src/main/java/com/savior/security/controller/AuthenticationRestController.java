@@ -46,47 +46,31 @@ public class AuthenticationRestController {
 	@Autowired
 	UserRepository userRepo;
 
-	@RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
-	// public ResponseEntity<?> createAuthenticationToken(@RequestBody
-	// JwtAuthenticationRequest authenticationRequest, Device device) throws
-	// AuthenticationException {
-	public String createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device)
-			throws AuthenticationException {
+	 @RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
+	    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
+	   
+	        // Perform the security
+	    	
+	    	System.out.println("User logged in with " + authenticationRequest.getUsername() + " and password as " + authenticationRequest.getPassword());
+	        final Authentication authentication = authenticationManager.authenticate(
+	                new UsernamePasswordAuthenticationToken(
+	                        authenticationRequest.getUsername(),
+	                        authenticationRequest.getPassword()
+	                )
+	        );      
+	        
+	        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		// Perform the security
-		try {
-			final Authentication authentication = authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
-							authenticationRequest.getPassword()));
+	        // Reload password post-security so we can generate token
+	        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+	        
+	        System.out.println("The user is successfully logged in with role as " + userDetails.getAuthorities().toString());
+	        final String token = jwtTokenUtil.generateToken(userDetails, device);
 
-			SecurityContextHolder.getContext().setAuthentication(authentication);
+	        // Return the token
 
-			// Reload password post-security so we can generate token
-			final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-			final String token = jwtTokenUtil.generateToken(userDetails, device);
-
-			// finding user from username
-
-			User user = userRepo.findByUsername(authenticationRequest.getUsername());
-			for (Authority a : user.getAuthorities())
-
-				// TODO : better to use switch statement
-				if (a.getName() == AuthorityName.ROLE_USER) {
-					return "mainpage";
-				} else if (a.getName() == AuthorityName.ROLE_ADMIN) {
-					return "adminpage";
-				}
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-
-		// instead of returning token we will redirect the user appropriately to
-		// particular page..
-		// Return the token
-
-		return "homepage";
-		// return ResponseEntity.ok(new JwtAuthenticationResponse(token));
-	}
+	        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+	    }
 
 	@RequestMapping(value = "${jwt.route.authentication.refresh}", method = RequestMethod.GET)
 	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {

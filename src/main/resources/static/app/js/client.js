@@ -1,21 +1,15 @@
 /**
- * Author : Rohan Shirke
+ * Created by stephan on 20.03.16.
  */
+
 $(function () {
     // VARIABLES =============================================================
     var TOKEN_KEY = "jwtToken"
-//    var $notLoggedIn = $("#notLoggedIn");
-//    var $loggedIn = $("#loggedIn").hide();
-//    var $response = $("#response");
-//    var $login = $("#login");
-//    var $userInfo = $("#userInfo").hide();
-
+    var $notLoggedIn = $("#notLoggedIn");
+    var $loggedIn = $("#loggedIn").hide();
+    var $response = $("#response");
     var $login = $("#login");
-    var $postlogin = $("#postlogin").hide();
-    var $bodyx = $("#bodyx");
-    var $body1 = $("#body1").hide();
-    var $footer = $("#footer");
-    
+    var $userInfo = $("#userInfo").hide();
 
     // FUNCTIONS =============================================================
     function getJwtToken() {
@@ -38,15 +32,12 @@ $(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data, textStatus, jqXHR) {
-            	//user successfully logged in !!
-                setJwtToken(data.token);
-                $bodyx.hide();
-                $body1.show();
+              /*  setJwtToken(data.token);
                 $login.hide();
-                $postlogin.show();
-                //$notLoggedIn.hide();
-                //showTokenInformation()
-                //showUserInformation();
+                $notLoggedIn.hide();
+                showTokenInformation()
+                showUserInformation();*/
+            	window.location.href = "/loginpath";
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status === 401) {
@@ -116,6 +107,7 @@ $(function () {
             .attr("title", "Token: " + getJwtToken())
             .show();
     }
+    
 
     function showResponse(statusCode, message) {
         $response
