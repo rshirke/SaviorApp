@@ -2,6 +2,17 @@
 <title>Savior App
 </title>
 <head>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
+
+<script src="/static/app/js/main/getBloodBanks.js"
+	th:src="@{/app/js/main/getBloodBanks.js}"></script>
+
 <link type="text/css" rel="stylesheet" href="/static/app/css/home.css" th:href="@{/app/css/home.css}" />
 <link type="text/css" rel="stylesheet" href="/static/app/css/simple-sidebar.css" th:href="@{/app/css/simple-sidebar.css}" />
 
@@ -47,7 +58,7 @@ By clicking Create an account, you agree to our Terms.<br></br>
 </div>
 
 <!-- below code after login -->
-<div class="bodyx" id="body1">
+<div class="bodyx" id="body1" ng-app="helloworld">
     <div  id="wrapper">
 
         <!-- Sidebar -->
@@ -59,10 +70,10 @@ By clicking Create an account, you agree to our Terms.<br></br>
                     </a>
                 </li>
                 <li>
-                    <a href="#">Acceptor</a>
+                    <a ui-sref="hello" ui-sref-active="active">Acceptor</a>
                 </li>
                 <li>
-                    <a href="#">Donor</a>
+                    <a ui-sref="about" ui-sref-active="active">Donor</a>
                 </li>
                 <li>
                     <a href="#">Transaction</a>
@@ -77,20 +88,9 @@ By clicking Create an account, you agree to our Terms.<br></br>
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Simple Sidebar</h1>
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-
-
-                    </div>
-
-                    
-                </div>
-            </div>
+        
+        <ui-view></ui-view>
+  
         </div>
 </div>
 </div>

@@ -4,11 +4,12 @@ myApp.config(function($stateProvider) {
 	var helloState = {
 			name: 'hello',
 			url: '/acceptor',
-			template: "<form method=\"post\" action=\"/postlogin\"> <div id=\"form1\" class=\"header\">Please select the blood Group and Quantity<br></br> <input placeholder=\"Blood Group\" type=\"mail\" id=\"bbgroup\" /><br></br> <input placeholder=\"Quantity\" type=\"mail\" id=\"bbqty\" /><br></br>  </div> <div id=\"submit1\" class=\"header\"><input type=\"submit\" id=\"button1\" value=\"search\"/></div></form> <div id=\"getUsersData\" ng-controller=\"MainCtrl\"> "
-				+								"<button ng-click=\"getData()\">Get Data</button>" 
-				+								"<button ng-click=\"clearData()\">Clear Data</button>"
-				+								"<pre>{{ data | json }}</pre>"
-				+							"</div>"
+			template: "<form id=\"searchBanks\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" id=\"bloodGroup\" placeholder=\"blood group type\" name=\"bgroup\"></div>" +
+					"<div class=\"form-group\"><input type=\"text\" class=\"form-control\" id=\"bloodqty\" placeholder=\"quantity\" name=\"bquantity\"></div>" +
+					"<button type=\"submit\" class=\"btn btn-default\">Search</button></form>" +
+					"<div id=table1> </div>" +
+					"<div id=map1> </div>"
+					
 	}
 
 	var aboutState = {

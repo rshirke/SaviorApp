@@ -44,6 +44,67 @@ $(function () {
                 $body1.show();
                 $login.hide();
                 $postlogin.show();
+                $footer.hide();
+                //$notLoggedIn.hide();
+                //showTokenInformation()
+                //showUserInformation();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    $('#loginErrorModal')
+                        .modal("show")
+                        .find(".modal-body")
+                        .empty()
+                        .html("<p>Spring exception:<br>" + jqXHR.responseJSON.exception + "</p>");
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
+            }
+        });
+    } 
+    
+    
+    function searchBanks(searchData) {
+        $.ajax({
+            url: "/bloodbanks/getallbb1",
+            type: "POST",
+            data: JSON.stringify(searchData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+            	//data returned from the server about the banks!!
+                //need to draw a table of blood banks
+            	
+            	var $table1 = $userInfo.find("#table1");
+
+            	$table1.append($("<table>")); 
+            	$table1.append($("<tr><th>Bank Name</th><th>quantity</th><th>address</th></tr>"));
+            	
+                var $bloodbanksList = $("");
+                data.bbLists.forEach(function (bloodbank) {
+                	$bloodbanksList.append($("<tr>"));
+                	$bloodbanksList.append($("<td>").text(bloodbank.bbName));
+                	$bloodbanksList.append($("</td>"));
+                	$bloodbanksList.append($("<td>").text(bloodbank.quantity));
+                	$bloodbanksList.append($("</td>"));
+                	$bloodbanksList.append($("<td>").text(bloodbank.address));
+                	$bloodbanksList.append($("</td>"));
+                	$bloodbanksList.append($("</tr>"));
+                });
+                
+                var $tablefinal = $("</table>");
+                $bloodbanksList.append($tablefinal);
+                $table1.append($bloodbanksList);
+            	
+                
+                ///rly we need to put the map and put it in the page
+            	
+//            	setJwtToken(data.token);
+//                $bodyx.hide();
+//                $body1.show();
+//                $login.hide();
+//                $postlogin.show();
+//                $footer.hide();
                 //$notLoggedIn.hide();
                 //showTokenInformation()
                 //showUserInformation();
@@ -134,6 +195,18 @@ $(function () {
         };
 
         doLogin(formData);
+    });
+    
+    $("#searchBanks").submit(function (event) {
+        event.preventDefault();
+
+        var $form = $(this);
+        var searchData = {
+            bloodGroup: $form.find('input[name="bgroup"]').val(),
+            bloodQuantity: $form.find('input[name="bquantity"]').val()
+        };
+
+        searchBanks(searchData);
     });
 
     $("#logoutButton").click(doLogout);
