@@ -99,54 +99,10 @@ $(function () {
         });
     }    
     
-    function searchBanksfunc(searchData) {
-        $.ajax({
-            url: "/bloodbanks/getallbb1",
-            type: "POST",
-            data: JSON.stringify(searchData),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            headers: createAuthorizationTokenHeader(),
-            success: function (data, textStatus, jqXHR) {
-            	           	
-            	if(data){
-                    var len = data.length;
-                    console.log(len);
-                    var txt = "";
-                    if(len > 0){
-                        for(var i=0;i<len;i++){
-                        	
-                            if(data[i].bloodBankName && data[i].aPlusGroupQty){
-                                txt += "<tr><td class=\"bbid\">"+data[i].id+"</td><td class=\"bbname\">"+data[i].bloodBankName+"</td><td class=\"Aqty\">"+data[i].aPlusGroupQty+"</td><td><button id=\"sendrow\"></button> </td></tr>";
-                                console.log(txt);
-                            }
-                        }
-                        if(txt != ""){
-                            $("#table").append(txt).removeClass("hidden");
-                        }
-                    }
-                }
-            	
-                ///rly we need to put the map and put it in the page
-            	
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status === 401) {
-                    $('#loginErrorModal')
-                        .modal("show")
-                        .find(".modal-body")
-                        .empty()
-                        .html("<p>Spring exception:<br>" + jqXHR.responseJSON.exception + "</p>");
-                } else {
-                    throw new Error("an unexpected error occured: " + errorThrown);
-                }
-            }
-        });
-    }
-
-    
-    function bookBlood(bloodData) {
-        $.ajax({
+ function bookBlood(bloodData) {
+    	
+    	console.log("The id is " + bloodData);
+       /* $.ajax({
             url: "/bookblood",
             type: "POST",
             data: JSON.stringify(searchData),
@@ -172,9 +128,81 @@ $(function () {
         });
         $contentpage1.hide();
         $contentpage2.show();
+        */
+    }
+    
+    function searchBanksfunc(searchData) {
+        $.ajax({
+            url: "/bloodbanks/getallbb1",
+            type: "POST",
+            data: JSON.stringify(searchData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: createAuthorizationTokenHeader(),
+            success: function (data, textStatus, jqXHR) {
+            	           	
+            	if(data){
+                    var len = data.length;
+                    console.log(len);
+                    var txt = "";
+                    if(len > 0){
+                        for(var i=0;i<len;i++){
+                        	
+                            if(data[i].bloodBankName && data[i].aPlusGroupQty){
+                                txt += "<tr><td class=\"bbid\">"+data[i].id+"</td><td class=\"bbname\">"+data[i].bloodBankName+"</td><td class=\"Aqty\">"+data[i].aPlusGroupQty+"</td><td><button id=\"sendrow\">Book</button> </td></tr>";
+                                console.log(txt);
+                            }
+                        }
+                        if(txt != ""){
+                            $("#table").append(txt).removeClass("hidden");
+                        }
+                    }
+                
+            	
+            	// displaying map 
+            	var map = new google.maps.Map(document.getElementById('map'), {
+            	      zoom: 10,
+            	      center: new google.maps.LatLng(41.8754, -87.6248),
+            	      mapTypeId: google.maps.MapTypeId.ROADMAP
+            	    });
+
+            	    var infowindow = new google.maps.InfoWindow();
+
+            	    var marker, i;
+
+            	    for (i = 0; i < len; i++) {  
+            	      marker = new google.maps.Marker({
+            	        position: new google.maps.LatLng(data[i].geoX, data[i].geoY),
+            	        map: map
+            	      });
+
+            	      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            	        return function() {
+            	          infowindow.setContent(locations[i][0]);
+            	          infowindow.open(map, marker);
+            	        }
+            	      })(marker, i));
+            	    }
+            	
+                
+            	}
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    $('#loginErrorModal')
+                        .modal("show")
+                        .find(".modal-body")
+                        .empty()
+                        .html("<p>Spring exception:<br>" + jqXHR.responseJSON.exception + "</p>");
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
+            }
+        });
     }
 
     
+       
     function doLogout() {
     	removeJwtToken();
     	$login.show();
@@ -280,7 +308,8 @@ $(function () {
     });
     
     $('#sendrow').click(function(){
-        var qty = $(this).parent().siblings('.Aqty').text();
+    	
+        /*var qty = $(this).parent().siblings('.Aqty').text();
         var bbname = $(this).parent().siblings('.bbname').text();
         var bbid = $(this).parent().siblings('.bbid').text();
  
@@ -290,7 +319,9 @@ $(function () {
                 Bbid: bbid
             };
         
-        bookblood(bloodData);
+        bookblood(bloodData);*/
+    	
+    	console.log("Book button was pressed");
     });
     
 
