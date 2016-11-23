@@ -3,17 +3,23 @@
 </title>
 <head>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></link>
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"></link>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="/static/app/js/main/getBloodBanks.js"
 	th:src="@{/app/js/main/getBloodBanks.js}"></script>
 
 <link type="text/css" rel="stylesheet" href="/static/app/css/home.css" th:href="@{/app/css/home.css}" />
+<link type="text/css" rel="stylesheet" href="/static/app/css/table1.css" th:href="@{/app/css/table1.css}" />
 <link type="text/css" rel="stylesheet" href="/static/app/css/simple-sidebar.css" th:href="@{/app/css/simple-sidebar.css}" />
 
 </head>
@@ -43,14 +49,12 @@
 <div id="intro2" class="bodyx">Create an account</div>
 <div id="img2" class="bodyx"><img src="/static/app/images/homepagemain.png" th:src="@{/app/images/homepagemain.png}"/></div>
 <div id="intro3" class="bodyx">It's free and always will be.</div>
-<form method="post" action="/postlogin" >
-<div id="form3" class="bodyx"><input placeholder="Firstname" type="text" id="namebox" name="name1" /><input placeholder="Lastname" type="text" id="namebox"/><br></br>
-<input placeholder="Email" type="text" id="mailbox"/><br></br>
-<input placeholder="Re-enter email" type="text" id="mailbox"/><br></br>
-<input placeholder="Password" type="password" id="mailbox"/><br></br>
-<input type="date" id="namebox"/><br></br>
-<input type="text" id="mailbox" placeholder="Blood Group" /><br></br>
-<input type="radio" name="sex" value="male"/> Male  <input type="radio" name="sex" value="female"/> Female<br></br><br></br>
+<form id="registerForm" >
+<div id="form3" class="bodyx">
+<input placeholder="Username" type="text" id="namebox" name="username1" class="form-control" />
+<input placeholder="Lastname" type="text" id="namebox" name ="lastname1" class="form-control" /><br></br>
+<input placeholder="Email" type="text" id="mailbox" name="email1" class="form-control" /><br></br>
+<input placeholder="Password" type="password" id="mailbox" name="password1" class="form-control" /><br></br>
 By clicking Create an account, you agree to our Terms.<br></br>
 <input type="submit" id="button2" value="Signup"/>
 </div>
@@ -59,7 +63,7 @@ By clicking Create an account, you agree to our Terms.<br></br>
 
 <!-- below code after login -->
 <div class="bodyx" id="body1" ng-app="helloworld">
-    <div  id="wrapper">
+    <div id="wrapper">
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
@@ -70,26 +74,52 @@ By clicking Create an account, you agree to our Terms.<br></br>
                     </a>
                 </li>
                 <li>
-                    <a ui-sref="hello" ui-sref-active="active">Acceptor</a>
+                 <a id="acceptorlhs">Acceptor</a> 
+               <!--     <a ui-sref="hello" ui-sref-active="active">Acceptor</a>  -->
                 </li>
                 <li>
-                    <a ui-sref="about" ui-sref-active="active">Donor</a>
+               <a id="donorlhs">Acceptor</a>  
+                <!--       <a ui-sref="about" ui-sref-active="active">Donor</a>  -->
                 </li>
                 <li>
-                    <a href="#">Transaction</a>
+                    <a id="transactionlhs">Transaction</a>
                 </li>
                 <li>
-                    <a href="#">Events</a>
+                    <a id="eventslhs">Events</a>
                 </li>
                 
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
+        
 
         <!-- Page Content -->
-        <div id="page-content-wrapper">
-        
-        <ui-view></ui-view>
+        <div id="page-content-wrapper">   
+       <!-- 	  <ui-view></ui-view>  -->
+       	
+       	
+       <div id="contentpage1">
+		<form id="searchBanks">
+		<div class="form-group">
+		<input type="text" class="form-control" id="bloodGroup" placeholder="blood group type" name="bgroup"/></div> 
+		<div class="form-group">
+		<input type="text" class="form-control" id="bloodqty" placeholder="quantity" name="bquantity"/></div>
+		<button type="submit" class="btn btn-default">Search</button></form> 
+		<div id="table1"> <table id="table" class="hidden" dir="ltr" width="500" border="1" 
+			summary="purpose/structure for speech output">
+	
+	<colgroup width="50%" />
+	<colgroup id="colgroup" class="colgroup" align="center" 
+			valign="middle" title="title" width="1*" 
+			span="2" style="background:#ddd;" /></table> </div></div>
+		
+		 <div id="contentpage2">
+		Donor Page got loaded !!
+		<div id="table1" border ="1" class="responstable"></div></div>
+		
+		<div id="contentpage3">
+		Transaction History Page !! 
+		<div id="table1"></div></div>
   
         </div>
 </div>
