@@ -26,8 +26,7 @@ import javax.validation.constraints.Size;
 @Table(name = "USER")
 public class User {
 
-
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")
+	@Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     //@SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
@@ -155,4 +154,5 @@ public class User {
     public void setLastPasswordResetDate(Date lastPasswordResetDate) {
         this.lastPasswordResetDate = lastPasswordResetDate;
     }
+    
 }

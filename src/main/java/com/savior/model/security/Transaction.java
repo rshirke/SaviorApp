@@ -17,6 +17,14 @@ public class Transaction {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")
 	private Long id;
 	
+	public Transaction(String bloodGroup, String status, int quantity, Date date) {
+		super();
+		this.bloodGroup = bloodGroup;
+		this.status = status;
+		this.quantity = quantity;
+		this.date = date;
+	}
+
 	@Column(name="BLOODGROUP")
 	private String bloodGroup;
 	

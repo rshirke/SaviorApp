@@ -4,19 +4,20 @@
 $(function () {
     // VARIABLES =============================================================
     var TOKEN_KEY = "jwtToken"
-//    var $notLoggedIn = $("#notLoggedIn");
-//    var $loggedIn = $("#loggedIn").hide();
-//    var $response = $("#response");
-//    var $login = $("#login");
-//    var $userInfo = $("#userInfo").hide();
 
+
+    	
     var $login = $("#login");
     var $postlogin = $("#postlogin").hide();
     var $bodyx = $("#bodyx");
     var $body1 = $("#body1").hide();
     var $footer = $("#footer");
+    var $contentpage1 = $("#contentpage1");
+    var $contentpage2 = $("#contentpage2");
+    var $contentpage3 = $("#contentpage3");
     
-
+    var $table = $("#table1");
+    
     // FUNCTIONS =============================================================
     function getJwtToken() {
         return localStorage.getItem(TOKEN_KEY);
@@ -45,9 +46,9 @@ $(function () {
                 $login.hide();
                 $postlogin.show();
                 $footer.hide();
-                //$notLoggedIn.hide();
-                //showTokenInformation()
-                //showUserInformation();
+                $contentpage2.hide();
+                $contentpage3.hide();
+               
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status === 401) {
@@ -61,53 +62,130 @@ $(function () {
                 }
             }
         });
-    } 
+    }    
     
     
-    function searchBanks(searchData) {
+    function doRegister(registerData) {
+        $.ajax({
+            url: "/register",
+            type: "POST",
+            data: JSON.stringify(registerData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+            	//user successfully logged in !!
+                setJwtToken(data.token);
+                $bodyx.hide();
+                $body1.show();
+                $login.hide();
+                $postlogin.show();
+                $footer.hide();
+                $contentpage1.show();
+                $contentpage2.hide();
+                $contentpage3.hide();
+               
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    $('#loginErrorModal')
+                        .modal("show")
+                        .find(".modal-body")
+                        .empty()
+                        .html("<p>Spring exception:<br>" + jqXHR.responseJSON.exception + "</p>");
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
+            }
+        });
+    }    
+    
+ function bookBlood(bloodData) {
+    	
+    	console.log("The id is " + bloodData);
+       /* $.ajax({
+            url: "/bookblood",
+            type: "POST",
+            data: JSON.stringify(searchData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: createAuthorizationTokenHeader(),
+            success: function (data, textStatus, jqXHR) {
+            //confirmed the transaction was complete  	
+            	alert("The requested blood got booked !!!")              
+            	
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    $('#loginErrorModal')
+                        .modal("show")
+                        .find(".modal-body")
+                        .empty()
+                        .html("<p>Spring exception:<br>" + jqXHR.responseJSON.exception + "</p>");
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
+            }
+        });
+        $contentpage1.hide();
+        $contentpage2.show();
+        */
+    }
+    
+    function searchBanksfunc(searchData) {
         $.ajax({
             url: "/bloodbanks/getallbb1",
             type: "POST",
             data: JSON.stringify(searchData),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
+            headers: createAuthorizationTokenHeader(),
             success: function (data, textStatus, jqXHR) {
-            	//data returned from the server about the banks!!
-                //need to draw a table of blood banks
+            	           	
+            	if(data){
+                    var len = data.length;
+                    console.log(len);
+                    var txt = "";
+                    if(len > 0){
+                        for(var i=0;i<len;i++){
+                        	
+                            if(data[i].bloodBankName && data[i].aPlusGroupQty){
+                                txt += "<tr><td class=\"bbid\">"+data[i].id+"</td><td class=\"bbname\">"+data[i].bloodBankName+"</td><td class=\"Aqty\">"+data[i].aPlusGroupQty+"</td><td><button id=\"sendrow\">Book</button> </td></tr>";
+                                console.log(txt);
+                            }
+                        }
+                        if(txt != ""){
+                            $("#table").append(txt).removeClass("hidden");
+                        }
+                    }
+                
             	
-            	var $table1 = $userInfo.find("#table1");
+            	// displaying map 
+            	var map = new google.maps.Map(document.getElementById('map'), {
+            	      zoom: 10,
+            	      center: new google.maps.LatLng(41.8754, -87.6248),
+            	      mapTypeId: google.maps.MapTypeId.ROADMAP
+            	    });
 
-            	$table1.append($("<table>")); 
-            	$table1.append($("<tr><th>Bank Name</th><th>quantity</th><th>address</th></tr>"));
+            	    var infowindow = new google.maps.InfoWindow();
+
+            	    var marker, i;
+
+            	    for (i = 0; i < len; i++) {  
+            	      marker = new google.maps.Marker({
+            	        position: new google.maps.LatLng(data[i].geoX, data[i].geoY),
+            	        map: map
+            	      });
+
+            	      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            	        return function() {
+            	          infowindow.setContent(locations[i][0]);
+            	          infowindow.open(map, marker);
+            	        }
+            	      })(marker, i));
+            	    }
             	
-                var $bloodbanksList = $("");
-                data.bbLists.forEach(function (bloodbank) {
-                	$bloodbanksList.append($("<tr>"));
-                	$bloodbanksList.append($("<td>").text(bloodbank.bbName));
-                	$bloodbanksList.append($("</td>"));
-                	$bloodbanksList.append($("<td>").text(bloodbank.quantity));
-                	$bloodbanksList.append($("</td>"));
-                	$bloodbanksList.append($("<td>").text(bloodbank.address));
-                	$bloodbanksList.append($("</td>"));
-                	$bloodbanksList.append($("</tr>"));
-                });
                 
-                var $tablefinal = $("</table>");
-                $bloodbanksList.append($tablefinal);
-                $table1.append($bloodbanksList);
-            	
-                
-                ///rly we need to put the map and put it in the page
-            	
-//            	setJwtToken(data.token);
-//                $bodyx.hide();
-//                $body1.show();
-//                $login.hide();
-//                $postlogin.show();
-//                $footer.hide();
-                //$notLoggedIn.hide();
-                //showTokenInformation()
-                //showUserInformation();
+            	}
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status === 401) {
@@ -123,17 +201,16 @@ $(function () {
         });
     }
 
+    
+       
     function doLogout() {
-        removeJwtToken();
-        $login.show();
-        $userInfo
-            .hide()
-            .find("#userInfoBody").empty();
-        $loggedIn
-            .hide()
-            .attr("title", "")
-            .empty();
-        $notLoggedIn.show();
+    	removeJwtToken();
+    	$login.show();
+        $postlogin.hide();
+        $bodyx.show();
+        $body1.hide();
+        $footer.show();
+        
     }
 
     function createAuthorizationTokenHeader() {
@@ -172,7 +249,7 @@ $(function () {
     }
 
     function showTokenInformation() {
-        $loggedIn
+        $loginText
             .text("Token: " + getJwtToken())
             .attr("title", "Token: " + getJwtToken())
             .show();
@@ -197,6 +274,27 @@ $(function () {
         doLogin(formData);
     });
     
+    
+    
+    
+    $("#registerForm").submit(function (event) {
+        event.preventDefault();
+
+        var $form = $(this);
+        var registerData = {
+            username: $form.find('input[name="username1"]').val(),
+            lastname: $form.find('input[name="lastname1"]').val(),
+            email: $form.find('input[name="email1"]').val(),
+            password: $form.find('input[name="password1"]').val()
+        };
+        
+        console.log(registerData);
+        
+        console.log("going to send the data to server");
+
+        doRegister(registerData);
+    });
+    
     $("#searchBanks").submit(function (event) {
         event.preventDefault();
 
@@ -206,10 +304,28 @@ $(function () {
             bloodQuantity: $form.find('input[name="bquantity"]').val()
         };
 
-        searchBanks(searchData);
+        searchBanksfunc(searchData);
     });
+    
+    $('#sendrow').click(function(){
+    	
+        /*var qty = $(this).parent().siblings('.Aqty').text();
+        var bbname = $(this).parent().siblings('.bbname').text();
+        var bbid = $(this).parent().siblings('.bbid').text();
+ 
+        var bloodData = {
+                Qty: qty,
+                Bbname: bbname,
+                Bbid: bbid
+            };
+        
+        bookblood(bloodData);*/
+    	
+    	console.log("Book button was pressed");
+    });
+    
 
-    $("#logoutButton").click(doLogout);
+    $("#logout").click(doLogout);
 
     $("#exampleServiceBtn").click(function () {
         $.ajax({
@@ -243,17 +359,9 @@ $(function () {
         });
     });
 
-    $loggedIn.click(function () {
-        $loggedIn
-                .toggleClass("text-hidden")
-                .toggleClass("text-shown");
-    });
-
-    // INITIAL CALLS =============================================================
+     // INITIAL CALLS =============================================================
     if (getJwtToken()) {
-        $login.hide();
-        $notLoggedIn.hide();
-        showTokenInformation();
-        showUserInformation();
+        $login.show();
+       
     }
 });
